@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+  <h:form id="form">
+	<p:panel header="Finalizar Compras">
+		<p:growl id="growl15" showDetail="true" sticky="true" />
+		 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+	 <h:panelGrid  id="gridBuscaProduto" columns="4" cellpadding="4" >
+		  <h:panelGrid columns="1" cellpadding="4" >
+		    <p:panel header="Formas de Pagamentos">
+		     <p:selectManyMenu id="advanced" value="#{vendaBean.selectedFormaPagamentos}" size="100"  style="width:300px; height:260px; "
+                            var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+              <f:selectItems value="#{vendaBean.listasFormaPagamentos}" var="theme" itemLabel="#{theme.formaPagamento}" itemValue="#{theme}" />
+              <f:converter converterId="entityConverter"/> 
+              <p:column>
+                <h:outputText value="#{t.formaPagamento}" />
+              </p:column>
+             </p:selectManyMenu>
+ 
+           </p:panel>
+            <p:commandButton value="Adcionar" update=":form:tabelaPagamento" action="#{vendaBean.adicionarPagamentos()}"    icon="ui-icon-check" style="margin-right:10px"   />
+         </h:panelGrid>
+        
+         <h:panelGrid columns="3" cellpadding="4" >
+           <h:panelGrid columns="1" cellpadding="4" >
+              <h:panelGrid columns="1" cellpadding="4" >
+                <p:panel header="Total de Vendas"  style="height:250px">
+                   <p:outputLabel value="#{vendaBean.vendas.totalVendas.valorTotalVendas}R$"  style="height:70px; font-size:150px; color:red;  font-weight: bold;"/> 
+                 </p:panel>
+              </h:panelGrid>   
+              <h:panelGrid columns="3" cellpadding="4" >
+               <h:outputLabel value="Parcelas:" style="font-weight:bold"  />
+               <p:inputText id="valorParcelas"  style="width: 100px;" value="#{vendaBean.valorParcelasVendas}"   readonly="true"/>  
+               <p:selectOneMenu id="parcelasid" value="#{vendaBean.qtdParcelas}" style="width: 230px;" required="false" disabled="#{vendaBean.resultadoparcelas}">
+                          <f:selectItem itemLabel="Selecione Parcelas" itemValue="" />
+                          <f:selectItem itemLabel="1" itemValue="1" />
+                          <f:selectItem itemLabel="2" itemValue="2" />
+                          <f:selectItem itemLabel="3" itemValue="3" />
+                          <f:selectItem itemLabel="4" itemValue="4" />
+                          <f:selectItem itemLabel="5" itemValue="5" />
+                          <f:selectItem itemLabel="6" itemValue="6" />
+                          <f:selectItem itemLabel="7" itemValue="7" />
+                          <f:selectItem itemLabel="8" itemValue="8" />
+                          <f:selectItem itemLabel="9" itemValue="9" />
+                          <f:selectItem itemLabel="10" itemValue="10" />
+                          <f:selectItem itemLabel="11" itemValue="11" />
+                          <f:selectItem itemLabel="12" itemValue="12" />
+                       <f:ajax event="change" render="@form" update=":form:valorParcelas" execute="@form"  listener="#{vendaBean.getAddValorParcelas()}" ajax="false"/>  
+               </p:selectOneMenu> 
+            </h:panelGrid>
+              <h:panelGrid columns="2" cellpadding="4" >
+		         <p:outputLabel value="Valor a Pago :"  style=" font-size:18px; color:red;  font-weight: bold;"/> 
+                 <p:inputText   value="#{vendaBean.valorTotal}"  style="width:243px;"   onkeypress="if(event.keyCode == 13){onchange(); return false; } ">
+					       <f:ajax event="change" render="@form" update=":form" execute="@form"  listener="#{vendaBean.getAddValorPago()}" ajax="false"/>
+                 </p:inputText> 
+                 <p:outputLabel value="Falta a ser Pago :"  style=" font-size:18px; color:red;  font-weight: bold;"/> 
+                 <p:inputText  value="#{vendaBean.valorFaltando}"  style="width:243px;"  />  
+              </h:panelGrid>
+            </h:panelGrid>
+             
+            <h:panelGrid columns="1" cellpadding="4" >
+		     <p:panel header="Tipos de Pagamentos">
+		           <p:selectManyMenu id="advanced1" value="#{vendaBean.selectedTipoPagamentos}" size="100"  style="width:300px; height:250px; " 
+                          var="a" filter="true" filterMatchMode="contains" showCheckbox="true">
+                      <f:selectItems value="#{vendaBean.listasTipoPagamentos}" var="as" itemLabel="#{as.tipoPagamento}" itemValue="#{as}" />
+                       <f:converter converterId="entityConverter"/>
+                        <f:ajax event="click" render="@form" update=":form:parcelasid" execute="@form"  listener="#{vendaBean.habilitaParcelados()}" ajax="false"/>
+                      <p:column>
+                        <h:outputText value="#{a.tipoPagamento}" />
+                   </p:column>
+                  </p:selectManyMenu>
+               </p:panel>
+          </h:panelGrid>
+		</h:panelGrid> 
+		     
+        </h:panelGrid>
+         <h:panelGrid columns="2" cellpadding="4" >
+             <h:panelGrid columns="1" cellpadding="10">	
+				<p:dataTable id="tabelaPagamento" emptyMessage="Nenhuma Forma de Pagamento Encontrado"
+				             value="#{vendaBean.listFinalizarPagamento}" var="list"
+				             style="max-width:930px; min-width:510px;  border: 3px solid; border-color:LightSteelBlue;" editable="true" >
+
+			       <p:column headerText="Tipos de Pagamentos"  style="border: 1px solid transparent;" >			
+							<h:outputText value="#{list.tipoPagamento.tipoPagamento}" style="width:100%"
+								disabled="true" />
+				  </p:column>	
+                   <p:column headerText="Formas de Pagamentos" style="max-width:450px;  min-width:450px;  overflow:hidden; border: 1px solid transparent;">
+							<h:outputText value="#{list.formaPagamento.formaPagamento}" style="width:100%"
+								disabled="true" />
+				   </p:column>	
+			       <p:column headerText="VL.Pago"  style="border: 1px solid transparent;"> 
+							<h:outputText value="#{list.valorPago}" style="width:70%"
+								disabled="true" />
+			       </p:column> 
+			       <p:column  headerText="VL.Parcelas"  style="border: 1px solid transparent;">
+							<h:outputText value="#{list.valorParcelas}R$" style="width:100%"
+								disabled="true" />
+			       </p:column> 
+			       <p:column  headerText="Qtd.Parcelas"  style="border: 1px solid transparent;">   
+							<h:outputText value="#{list.qtdParcelas}X" style="width:100%"/>
+			       </p:column>
+		      </p:dataTable>
+	          
+			</h:panelGrid>
+			<h:panelGrid columns="1" cellpadding="4" >
+             <h:panelGrid columns="2" cellpadding="4" >
+                 <p:outputLabel value="Valor Liquido:"  style="height:70px; font-size:18px; color:blue;  font-weight: bold;"/> 
+                 <p:inputText   value="#{vendaBean.valorTotalTrouco}"  />  
+		     </h:panelGrid>
+		      <h:panelGrid columns="2" cellpadding="4" >
+		         <p:outputLabel value="Valor Cliente :"  style=" font-size:18px; color:blue;  font-weight: bold;"/> 
+                 <p:inputText   value="#{vendaBean.valorPagoCliente}"  style="width:225px;"  />  
+              </h:panelGrid>  
+		      <h:panelGrid columns="2" cellpadding="4" >
+		          <p:commandButton value="Troco"  icon="ui-icon-check" update=":form:valorTroco" style="margin-right:10px" action="#{vendaBean.addTroco()}"   />
+		           <p:inputText id="valorTroco" value="#{vendaBean.valorTroco}" style="width:233px;" /> 
+		      </h:panelGrid>
+               
+		     </h:panelGrid>
+           </h:panelGrid>
+           <h:panelGrid columns="6" cellpadding="1">
+             <h:panelGrid columns="3" cellpadding="1">
+		      <p:commandButton value="Fechar à Venda"  icon="ui-icon-check" style="margin-right:10px" 	onclick="PF('dlg3').show();"  immediate="true" process="@this" update=":form:gridV"  />
+		      <p:commandButton value="Cancelar Venda"  icon="ui-icon-check" style="margin-left:1px"   action="#{controllerUtil.home}"/>
+		  
+		       <ui:include src="imprimirVenda.xhtml"/>		  
+		    </h:panelGrid>
+		   </h:panelGrid> 
+		   
+		  
+ 
+
+ 
+         
+	</p:panel>
+  </h:form>	
+</h:body>
+
+</html>

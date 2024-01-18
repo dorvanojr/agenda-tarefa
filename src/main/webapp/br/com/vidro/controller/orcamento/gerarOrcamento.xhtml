@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+  <h:form id="form">
+	<p:panel header="Gerar Orçamento">
+           	<p:growl id="growl13" showDetail="true" sticky="true" autoUpdate="true"
+		showSummary="false" />
+        <h:panelGrid columns="2" cellpadding="4">
+         <h:panelGrid columns="1" cellpadding="4" >
+         <h:outputLabel value="Produtos" style="font-weight:bold"  />
+         <p:selectOneMenu id="produtos15" value="#{controllerOrcamento.idProduto}" style="width: 258px;" required="false" >
+                          <f:selectItem itemLabel="Selecione Produtos" itemValue="" />
+                          <f:selectItems value="#{produtoBean.listProdutoAllOrcamento()}" var="classes1" itemLabel="#{classes1.nomeProduto}" itemValue="#{classes1.idProduto}" />
+                         <p:ajax event="change"  update=":form:valorUnitario"  listener="#{controllerOrcamento.getListaProdutosValorUnitario()}" ajax="false" />
+         </p:selectOneMenu>
+           
+         </h:panelGrid> 
+         <p:spacer width="5" height="10" />
+         <h:panelGrid columns="1" cellpadding="4" >
+                        <h:outputLabel for="valorUnitario" value="Valor Unitario" style="font-weight:bold"  />
+					   <p:inputText id="valorUnitario" value="#{controllerOrcamento.valorUnitario}" size="20" />
+		 </h:panelGrid>
+		
+          <h:panelGrid columns="1" cellpadding="4" >
+                        <h:outputLabel  value="Quantidade" style="font-weight:bold"  />
+					    <p:inputText id="qtd" value="#{controllerOrcamento.qtdProduto}" size="20" />
+		 </h:panelGrid>
+		 <br/>
+		 <br/>
+    </h:panelGrid>
+	<h:panelGrid columns="1" cellpadding="4">
+	    
+	   <p:commandButton value="Adcionar" ajax="false"
+		icon="ui-icon-check" style="margin-right:10px"
+		action="#{controllerOrcamento.addOrcamentos()}"  update="growl13" />
+	
+		
+		<h:panelGrid columns="1" cellpadding="10">
+			<p:dataTable id="tabelaOrc"
+				emptyMessage="Nenhuma Forma de Pagamento Encontrado"
+				value="#{controllerOrcamento.listasOrcamentos}" var="list"
+				style="max-width:930px; min-width:510px;  border: 3px solid; border-color:LightSteelBlue;"
+				editable="true">
+
+				<p:column headerText="Produtos"
+					style="border: 1px solid transparent;">
+					<h:outputText value="#{list.nomeProdutos}"
+						style="width:100%" disabled="true" />
+				</p:column>
+				<p:column headerText="Quantidade"
+					style="max-width:450px;  min-width:450px;  overflow:hidden; border: 1px solid transparent;">
+					<h:outputText value="#{list.quantidade}"
+						style="width:100%" disabled="true" />
+				</p:column>
+				<p:column headerText="VL.Unitario"
+					style="border: 1px solid transparent;">
+					<h:outputText value="#{list.valorUnitario}" style="width:70%"
+						disabled="true" />
+				</p:column>
+			</p:dataTable>
+
+		</h:panelGrid>
+	</h:panelGrid>
+    <br/>
+     <h:panelGrid columns="1" cellpadding="4" >
+                        <h:outputLabel value="Total Orçamento" style="font-weight:bold"  />
+					   <p:inputText id="valorVenda" value="#{controllerOrcamento.valorTotalVendas}" size="20" />
+    </h:panelGrid>
+     <br/>
+      <br/>
+	<p:commandButton value="Gerar Orçamento" ajax="false"
+		icon="ui-icon-check" style="margin-right:10px"
+		action="#{controllerOrcamento.gerarOrcamentoRelatorio()}"  update="growl13" />
+	<p:commandButton value="Cancelar" icon="ui-icon-check"
+		style="margin-right:10px" oncomplete="PF('dlg2').hide()" />
+           
+         
+	</p:panel>
+  </h:form>	
+</h:body>
+
+</html>

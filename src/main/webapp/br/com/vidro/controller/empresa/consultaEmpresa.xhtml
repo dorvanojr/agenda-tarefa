@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+	<!-- Consultar Cliente -->
+	
+	<p:panel id="panel" header="Consultar Empresa" style="height:600px;">
+		<h:form id="form">
+		
+			<h:panelGrid id="grid5" columns="3" cellpadding="4">
+				<p:inputText value="#{empresaBean.parametros}" />
+				<p:commandButton value="Pesquisar" action="#{empresaBean.acao()}"
+					icon="ui-icon-check" ajax="false" update=":form:tabela" />
+			</h:panelGrid>
+
+			<!-- Listar todos os Clientes -->
+			<p:growl id="msgs1" showDetail="true" />
+
+			<p:dataTable id="tabela" value="#{empresaBean.clientesEmpresas}" var="c"
+				editable="true">
+
+				<p:ajax event="rowEdit" listener="#{empresaBean.onRowEdit}"
+					update=":form:msgs1" />
+				<p:ajax event="rowEditCancel"
+					listener="#{empresaBean.onRowCancel}" update=":form:msgs1" />
+
+				<p:column headerText="id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{c.empresa.idEmpresa}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{c.empresa.idEmpresa}" style="width:100%"
+								disabled="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{c.nomeFantasia}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{c.nomeFantasia}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="CPF/CNPJ">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{c.empresa.documentos[0].cpfcnpj}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{c.empresa.documentos[0].cpfcnpj}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="telefone">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{c.empresa.telefone[0].telefone}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{c.empresa.telefone[0].telefone}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="endereço">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{c.endereco[0].endereco}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{c.endereco[0].endereco}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column style="text-align: center">
+					<f:facet name="header">
+						<h:outputText value="Excluir" />
+					</f:facet>
+					<p:commandButton value="Excluir"
+						onclick="PF('confirmation').show()" type="button" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton value="Alterar" image="ui-icon-tag"
+						update=":form:grid2 " oncomplete="PF('dlg3').show()">
+						<f:setPropertyActionListener value="#{c}"
+							target="#{empresaBean.cliente1}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		    
+			<ui:include src="updateEmpresa.xhtml"/>
+            <ui:include src="cadastroEmpresa.xhtml"/>
+          
+
+			<h:panelGrid id="grid4" columns="3" cellpadding="4" >
+				<p:commandButton value="Cadastrar" icon="ui-icon-disk"
+					onclick="PF('dlg2').show();"  immediate="true" process="@this" update=":form:grid" action="#{clienteBean.cleanForm()}"/>
+				<p:commandButton action="#{controllerUtil.home}"
+					value="Voltar" icon="ui-icon-arrowthick-1-w" />
+			</h:panelGrid>
+
+
+
+			<!-- Listar todos os Clientes -->
+			<p:growl id="msgs" showDetail="true" />
+
+		
+
+			<!-- Excluir Clientes -->
+			<p:confirmDialog
+				message="Tem Certeza que deseja excluir este registro?"
+				showEffect="bounce" hideEffect="explode" resizable="false"
+				modal="true" header="Excluir" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update=":form:tabela"
+					oncomplete="PF('confirmation').hide()"
+					action="#{empresaBean.excluir()}" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					type="button" />
+			</p:confirmDialog>
+		
+	         <ui:include src="consultaEmpresaAll.xhtml"/>
+	         
+	         
+       </h:form>
+
+	</p:panel>
+
+	<!-- Cadastro Clientes -->
+
+
+</h:body>
+
+</html>

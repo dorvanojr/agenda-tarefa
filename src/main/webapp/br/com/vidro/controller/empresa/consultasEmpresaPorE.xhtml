@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:repeat var="c" value="#{usuarioBean.listUsuariologado()}">
+
+ <p:dialog  header="Alterar Empresa" widgetVar="dlg4" modal="true"
+			height="450" width="900" top="20">
+			
+
+				<p:growl id="growl2" showDetail="true" sticky="true" />
+
+				<h:panelGrid id="grid2" columns="2" cellpadding="1"  >
+                    
+				    <h:outputLabel value="Razão Social " style="font-weight:bold" />
+					<h:outputLabel value="CNPJ" style="font-weight:bold" />
+					
+					<p:inputText value="#{c.empresa.razaoSocial}" size="50"/>
+					<ui:repeat var="d" value="#{c.empresa.documentos}"   >
+					   <p:inputText value="#{d.cnpj}"  rendered="#{d.cnpj!=null}"/>
+					</ui:repeat>	
+					
+					 <h:outputLabel value="Nome Fantasia" style="font-weight:bold" />
+					<h:outputLabel value="Ramo de Atividade" style="font-weight:bold"  />
+					
+					<p:inputText value="#{c.empresa.cliente[0].nomeFantasia}" size="50"/>
+					<p:inputText value="#{c.empresa.ramoAtividade}" />
+
+					<h:outputLabel value="Endereço" style="font-weight:bold"  />
+				    <h:outputLabel value="E-mail" style="font-weight:bold"  />
+				  
+				    <p:inputText value="#{c.empresa.endereco[0].endereco}" rendered="#{c.empresa.endereco[0]!=null}" size="50" />
+					<p:inputText value="#{empresaBean.endereco.endereco}" rendered="#{c.empresa.endereco[0]==null}" size="50" />
+					
+					<p:inputText value="#{empresaBean.email.email}" size="30" rendered="#{c.empresa.email[0]==null}"/>
+					<p:inputText value="#{c.empresa.email[0].email}" size="30" rendered="#{c.empresa.email[0]!=null}"/>
+					
+					
+					<h:panelGrid  columns="4" cellpadding="1" rendered="#{c.empresa.endereco[0]!=null}"> 
+				
+					   <h:outputLabel value="Bairro " style="font-weight:bold"  />
+					   <h:outputLabel value="Cidade" style="font-weight:bold" />
+					   <h:outputLabel value="UF " style="font-weight:bold"  />
+					   <h:outputLabel value="CEP" style="font-weight:bold" />
+					
+					  <p:inputText value="#{c.empresa.endereco[0].bairro}" size="15"/>
+					  <p:inputText value="#{c.empresa.endereco[0].cidade}" size="15"/>
+					  <p:inputText value="#{c.empresa.endereco[0].uf}" size="3" />
+					  <p:inputText value="#{c.empresa.endereco[0].cep}" size="10"/>
+				   
+					</h:panelGrid>
+					
+					<h:panelGrid  columns="4" cellpadding="1" rendered="#{c.empresa.endereco[0]==null}"> 
+				
+					   <h:outputLabel value="Bairro " style="font-weight:bold"  />
+					   <h:outputLabel value="Cidade" style="font-weight:bold" />
+					   <h:outputLabel value="UF " style="font-weight:bold"  />
+					   <h:outputLabel value="CEP" style="font-weight:bold" />
+					
+					  <p:inputText value="#{empresaBean.endereco.bairro}" size="15"/>
+					  <p:inputText value="#{empresaBean.endereco.cidade}" size="15"/>
+					  <p:inputText value="#{empresaBean.endereco.uf}" size="3" />
+					  <p:inputText value="#{empresaBean.endereco.cep}" size="10"/>
+				          
+					</h:panelGrid>
+					<h:panelGrid columns="1" cellpadding="1"> 
+					   
+					    <h:outputLabel value="Telefone " style="font-weight:bold"  />
+					    <p:inputText value="#{c.empresa.telefone[0].telefone}" rendered="#{c.empresa.telefone[0]!=null}"/>  
+					    <p:inputText value="#{empresaBean.telefone.telefone}" rendered="#{c.empresa.telefone[0]==null}"/>  
+					
+					 </h:panelGrid>
+
+					<h:panelGrid columns="2" cellpadding="1"  rendered="#{c.empresa.telefone[0]==null}">   
+					   
+					    <h:outputLabel value="Residencial" style="font-weight:bold"/>
+					    <h:outputLabel value="Celular " style="font-weight:bold"  />
+					      
+					    <p:inputText value="#{empresaBean.telefone.residencial}" />
+					    <p:inputText value="#{empresaBean.telefone.celular}" />    
+			
+					 </h:panelGrid>
+					
+					<h:panelGrid columns="2" cellpadding="1" rendered="#{c.empresa.telefone[0]!=null}">  
+					   
+					    <h:outputLabel value="Residencial" style="font-weight:bold"  />
+					    <p:inputText value="#{c.empresa.telefone[0].residencial}" />
+					     
+					    <h:outputLabel value="Celular " style="font-weight:bold"  />
+					    <p:inputText value="#{c.empresa.telefone[0].celular}" />    
+					 
+					 </h:panelGrid>
+					 
+					 <h:panelGrid columns="1" cellpadding="1" >  
+
+					    <h:outputLabel value="Whatapps" style="font-weight:bold"  />
+					      
+					  
+					    <p:inputText value="#{empresaBean.telefone.whatapps}" />   
+					
+					 </h:panelGrid>
+					 
+					  <h:panelGrid columns="1" cellpadding="1" >  
+					  
+					    <h:outputLabel value=" Fax " style="font-weight:bold"  />
+					      
+					    <p:inputText value="#{empresaBean.telefone.fax}" />  
+					
+					 </h:panelGrid>	
+				</h:panelGrid>
+                 <br/>
+				<p:commandButton value="Alterar" ajax="false" icon="ui-icon-check"
+					style="margin-right:10px" action="#{empresaBean.updatePerfilGerente(c.empresa)}"
+					update="growl" />
+				<p:commandButton value="Cancelar" update="grid2" icon="ui-icon-check"
+					style="margin-right:10px" oncomplete="PF('dlg3').hide()"/>
+	
+                
+		   </p:dialog>
+</ui:repeat>		   
+
+</html>
+

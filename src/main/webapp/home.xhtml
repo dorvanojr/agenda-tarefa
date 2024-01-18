@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Controle Administrativo</title>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title></title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width" />
+
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/image.css" />
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+	<link rel="stylesheet" href="css/main.css" />
+</h:head>
+<h:body>
+	<h:form id="form">
+		<p:toolbar>
+			<p:toolbarGroup align="left" height="10" style="height:40px"
+				styleClass="cor">
+				<p:menuButton value="Cadastros" styleClass="ui-icon-i" rendered="#{!request.isUserInRole('ROLE_ADMIN') }" >
+					<p:menuitem value="Clientes"
+						outcome="#{controllerRoute.consultarCliente()}" />
+					<p:menuitem value="Produtos"
+						outcome="#{controllerRoute.cunsultarProduto()}" />
+					<p:menuitem value="Fornecedores"
+						outcome="#{controllerRoute.cunsultarFornecedor()}"  rendered="#{request.isUserInRole('ROLE_GEREN')}" />
+					<p:menuitem value="Funcionarios"
+						outcome="#{controllerRoute.cunsultarFuncionario()}" rendered="#{request.isUserInRole('ROLE_GEREN')}"  />
+				</p:menuButton>
+				<p:button value="Vendas" rendered="#{!request.isUserInRole('ROLE_ADMIN') }"
+					outcome="#{controllerRoute.controllerVendas()}"
+					styleClass="estoque" />
+			  
+				<p:button value="Empresas" rendered="#{request.isUserInRole('ROLE_ADMIN') }"
+					outcome="#{controllerRoute.cunsultarEmpresa()}"
+					styleClass="ui-icon-i"  />
+					
+				<p:button value="Empresas" rendered="#{request.isUserInRole('ROLE_GEREN') }"
+					onclick="PF('dlg4').show();  return false"
+					immediate="true" process="@this" update="@form"
+					styleClass="empresa"  />
+					
+				<ui:include src="br/com/vidro/controller/empresa/consultasEmpresaPorE.xhtml"/>	
+					
+					
+				<p:button value="Usuarios" rendered="#{request.isUserInRole('ROLE_GEREN') }"
+					styleClass="usuario"  outcome="#{controllerRoute.cadastroUsuarioPorEmpresa()}"/>	
+
+				<p:menuButton value="Relatorio" styleClass="fin"  rendered="#{request.isUserInRole('ROLE_GEREN')}">
+					<p:menuitem value="Relatorio de Orçamento" 	outcome="#{controllerRoute.gerarOrcamento()}" />
+					<p:menuitem value="Relatorio de Vendas"  onclick="PF('dlg2').show();"  immediate="true" process="@this" />
+				    <p:menuitem value="Relatorio de Clientes" />
+					<p:menuitem value="Relatorio de Fornecedores" />
+					<p:menuitem value="Relatorio de Funcionarios" />
+					<p:menuitem value="Relatorio de Controller Produtos" />
+					
+				</p:menuButton>
+				<ui:include src="/br/com/vidro/controller/venda/filtroVenda.xhtml"/>
+			   <p:menuButton value="Configuração" styleClass="estoque" rendered="#{request.isUserInRole('ROLE_ADMIN')}" >
+					<p:menuitem value="Usuario"
+						outcome="#{controllerRoute.criarUsuario()}" />
+				</p:menuButton>
+				<!--    <p:button outcome="#{controllerRoute.EmailPage()}" value="ajuda" disabled="true"
+					styleClass="icone-i" /> -->
+			    <h:outputLink
+					value="#{facesContext.externalContext.requestContextPath}/j_spring_security_logout">
+					<h:outputText value="Sair" styleClass="icone" />
+				</h:outputLink>
+				  
+			</p:toolbarGroup>
+		</p:toolbar>
+		<f:view contentType="text/html; charset=UTF-8">
+			<div id="corpo" class="bkg-main">
+				<p:growl autoUpdate="true" showDetail="true" showSummary="false" />
+				<h:form>
+					<ui:insert name="corpo" />
+
+				</h:form>
+			</div>
+		</f:view>
+	</h:form>
+</h:body>
+</html>

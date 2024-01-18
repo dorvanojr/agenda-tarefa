@@ -1,0 +1,41 @@
+
+
+        <properties>
+			<!-- Configurações para ter acesso ao banco de dados -->
+			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
+
+			<property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:mysql://mysql.estoquelaos.kinghost.net:3306/estoquelaos" />
+			<property name="hibernate.connection.username" value="estoquelaos" />
+			<property name="hibernate.connection.password" value="14332689jm" />
+
+			<!-- Definição para mostrar no console os comandos do Hibernate -->
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="true" />
+
+			<!-- Seta o pool de conexões -->
+			<property name="c3p0.acquire_increment" value="1" />
+			<property name="c3p0.iddle_test_period" value="3000" />
+			<property name="c3p0.max_size" value="100" />
+			<property name="c3p0.max_statements" value="50" />
+			<property name="c3p0.min_size" value="5" />
+			<property name="c3p0.timeout" value="1800" />
+   
+			<property name="c3p0.acquireRetryDelay" value="1000" />
+			<property name="c3p0.acquireRetryAttempts" value="60" />
+			<property name="c3p0.breakAfterAcquireFailure" value="false" />
+		</properties>
+
+
+
+
+//applicationContext.xml
+
+<b:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<b:property name="url" value="jdbc:mysql://mysql.estoquelaos.kinghost.net:3306/estoquelaos" />
+		<b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<b:property name="username" value="estoquelaos" />
+		<b:property name="password" value="14332689jm" />
+	</b:bean>

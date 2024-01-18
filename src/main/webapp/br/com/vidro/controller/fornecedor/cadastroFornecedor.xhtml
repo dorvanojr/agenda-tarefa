@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:dialog header="Cadastro de Fornecedor" widgetVar="dlg2" modal="true"
+		height="560" width="770" top="0">
+
+			<p:growl id="growl" showDetail="true" sticky="true" />
+
+			<h:panelGrid id="grid" columns="1" cellpadding="2">
+
+				<h:outputLabel value="Nome Completo:" style="font-weight:bold" />
+				<p:inputText value="#{fornecedorBean.cliente.nome}" size="69" />
+
+				<h:panelGrid  columns="2" cellpadding="1"> 
+					   <h:outputLabel value="Endereco " style="font-weight:bold"  />
+					   <h:outputLabel value="Nome Fantasia " style="font-weight:bold" />
+					   
+					   <p:inputText value="#{fornecedorBean.endereco.endereco}" size="35" />
+					   <p:inputText value="#{fornecedorBean.fornecedor.nomeFantasia}" size="30" />
+				</h:panelGrid>
+				<h:panelGrid  columns="3" cellpadding="1"> 
+			         	<h:outputLabel value="Bairro" style="font-weight:bold" />
+				        <h:outputLabel value="Cidade" style="font-weight:bold" />
+				        <h:outputLabel value="Complemento" style="font-weight:bold" />
+				        
+				        <p:inputText value="#{fornecedorBean.endereco.bairro}" size="22" />
+				        <p:inputText value="#{fornecedorBean.endereco.cidade}" size="20"/>
+				        <p:inputText value="#{fornecedorBean.endereco.complemento}" size="19"/>
+				</h:panelGrid>
+				 <h:panelGrid columns="6" cellpadding="1" >  
+					    <h:outputLabel value=" Telefone" style="font-weight:bold"  />
+					    <h:outputLabel value=" Celular " style="font-weight:bold"  />
+					    <h:outputLabel value=" whatapps" style="font-weight:bold"  />
+					    <h:outputLabel value="N° Fax " style="font-weight:bold"  />
+					    <h:outputLabel value="CEP " style="font-weight:bold"  />
+					    <h:outputLabel value="UF" style="font-weight:bold"  />
+					    
+					    <p:inputText value="#{fornecedorBean.telefone.telefone}" size="10"/>
+					    <p:inputText value="#{fornecedorBean.telefone.celular}" size="10"/>    
+					    <p:inputText value="#{fornecedorBean.telefone.whatapps}" size="10"/>    
+					    <p:inputText value="#{fornecedorBean.telefone.fax}" size="9"/>  
+					    <p:inputText value="#{fornecedorBean.endereco.cep}" size="9"/>    
+					    <p:inputText value="#{fornecedorBean.endereco.uf}" size="1"/>
+					
+					 </h:panelGrid>
+					 <h:panelGrid  columns="2" cellpadding="1"> 
+					      <h:outputLabel value="E-mail " style="font-weight:bold"  />
+					      <h:outputLabel value="Nome Representante " style="font-weight:bold" />
+					   
+					      <p:inputText value="#{fornecedorBean.email.email}" size="35" />
+					      <p:inputText value="#{fornecedorBean.fornecedor.representante}" size="30" />
+				     </h:panelGrid>
+				     
+				     <h:panelGrid  columns="2" cellpadding="1"> 
+					      <h:outputLabel value="Home Page " style="font-weight:bold"  />
+					      <h:outputLabel value="G-TALK " style="font-weight:bold" />
+					   
+					      <p:inputText value="#{fornecedorBean.email.homepage}" size="30" />
+					      <p:inputText value="#{fornecedorBean.email.gtalk}" size="35" />
+				     </h:panelGrid>
+                     <h:panelGrid columns="6" cellpadding="1" >  
+					       <h:outputLabel value=" N° CNPJ" style="font-weight:bold"  />
+					       <h:outputLabel value=" N° LE " style="font-weight:bold"  />
+					       <h:outputLabel value=" N° IM" style="font-weight:bold"  />
+					       <h:outputLabel value="N° do CPF " style="font-weight:bold"  />
+					       <h:outputLabel value="N° RG " style="font-weight:bold"  />
+					       <h:outputLabel value="EMISSOR" style="font-weight:bold"  />
+					    
+					       <p:inputText value="#{fornecedorBean.documentos.cnpj}" size="9"/>
+					       <p:inputText value="#{fornecedorBean.documentos.nle}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.nim}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.cpf}" size="9"/>  
+					       <p:inputText value="#{fornecedorBean.documentos.rg}" size="8"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.emissor}" size="5"/>
+					
+					 </h:panelGrid>
+					
+			</h:panelGrid>
+        
+				
+			<p:commandButton value="Cadastrar" ajax="false" icon="ui-icon-check"
+				style="margin-right:10px" action="#{fornecedorBean.save()}"
+				update="growl" />
+			<p:commandButton value="Cancelar" update="grid" icon="ui-icon-check"
+				style="margin-right:10px" oncomplete="PF('dlg2').hide()" />
+	</p:dialog>
+
+</html>
+

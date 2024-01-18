@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+
+</style>
+</h:head>
+
+<h:body>
+
+	<p:panel id="panel" header=" Vendas de Produtos" style="height:100%; width:100%">
+       
+       
+        <h:form id="idBuscaProduto">
+        
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+       
+        <h:panelGrid columns="2" cellpadding="4" >
+				    <p:selectOneMenu id="produtos" value="#{vendaBean.idProduto}" style="width: 258px;" required="false" >
+                          <f:selectItem itemLabel="Selecione Produtos" itemValue="" />
+                          <f:selectItems value="#{vendaBean.listasDeProdutos}" var="classes1" itemLabel="#{classes1.nomeProduto}" itemValue="#{classes1.idProduto}" />
+                         	<p:ajax event="change" render="@form" update="idBuscaProduto"   listener="#{vendaBean.getListaProdutos3()}" ajax="false" />
+                    </p:selectOneMenu> 
+                    <p:commandButton value="Pesquisar Produtos"  icon="ui-icon-check"
+				        style="margin-right:10px" action="#{vendaBean.getListaProdutos2()}" execute="@form" update=":idBuscaProduto:produtos" />    
+	     </h:panelGrid>
+        <h:panelGrid  columns="2" cellpadding="3" > 	
+           <h:panelGrid  columns="1" cellpadding="3" > 
+           <p:graphicImage value="/temp/#{vendaBean.produto.cliente.idCliente}.jpg" cache="false" width="270"
+						height="310" />
+		  <h:panelGrid columns="1" cellpadding="5"  style="text-align:center">
+			         <h:outputLabel value="Total de venda" style="font-weight:bold"  />
+					 <p:inputText value="#{vendaBean.totalVendas.valorTotalVendas}" size="8"   style="height:50px;  font-size:50px; color:red;" />
+		  </h:panelGrid>
+		  		
+		  </h:panelGrid>
+		 
+		  <h:panelGrid  columns="1" cellpadding="3" > 
+          <h:panelGrid  columns="2" cellpadding="3" > 
+                      	
+                      
+					  <h:outputLabel value="Descrição" style="font-weight:bold"  />
+					  <h:outputLabel value="Codigo de Barras" style="font-weight:bold"    /> 
+					 
+						       		
+					  <p:inputText   value="#{vendaBean.produto.nomeProduto}"  size="15" style="height:70px; font-size:70px; color:red; background-color: black; font-weight: bold;" readonly="true"/>
+				      <p:inputText  value="#{vendaBean.parametros}"  size="12" style="height:50px; font-size:35px; color:red;  "
+					           onkeypress="if(event.keyCode == 13){onchange(); return false; } ">
+					       <f:ajax event="change" render="@form" update=":idBuscaProduto" execute="@form"  listener="#{vendaBean.getListaProdutos1()}" ajax="false"/>
+					  </p:inputText>
+                   
+		   </h:panelGrid>	
+	       <h:panelGrid columns="2">
+	          <h:panelGrid columns="1" cellpadding="10">	
+			   <f:facet name="header">CUPOM</f:facet>
+				<p:dataTable emptyMessage="Nenhum Item Encontrado"
+				             value="#{vendaBean.listVendas}" var="list"
+				             style="max-width:930px; min-width:510px; border: 3px solid; border-color:LightSteelBlue;" editable="true" >
+
+			       <p:column headerText="SEQ" style="border: 1px solid transparent;">			
+							<h:outputText value="#{list.seq}" style="width:100%;"
+								disabled="true" />
+				  </p:column>	
+                   <p:column headerText="PRODUTO" style="max-width:450px;  min-width:450px;  overflow:hidden; border: 1px solid transparent; ">
+							<h:outputText value="#{list.produto.nomeProduto}" style="width:100%"
+								disabled="true" />
+				   </p:column>	
+			       <p:column headerText="QTD" style=" border: 1px solid transparent;"> 
+							<h:outputText value="#{list.qtd}" style="width:70%;"
+								disabled="true" />
+			       </p:column> 
+			       <p:column  headerText="VL.UNIT" style=" border: 1px solid transparent;">
+							<h:outputText value="#{list.produto.precoVenda}R$" style="width:100%;"
+								disabled="true" />
+			       </p:column> 
+			       <p:column  headerText="VL.TOTAL" style="border: 1px solid transparent;">   
+							<h:outputText value="#{list.valorTotal}R$" style="width:100%"/>
+			       </p:column>
+		      </p:dataTable>
+	          
+			</h:panelGrid>
+			<h:panelGrid columns="1" cellpadding="1">
+			          <h:outputLabel value="Quantidade" style="font-weight:bold"  />
+					  <p:inputText  value="#{vendaBean.quantidade}"  size="8" style="height:50px; font-size:40px; color:red;"
+					           onkeypress="if(event.keyCode == 13){onchange(); return false; } ">
+					       <f:ajax event="change" render="@form" update=":idBuscaProduto" execute="@form"  listener="#{vendaBean.getTotal()}" ajax="true"/>
+					  </p:inputText>
+					
+					 <h:outputLabel value="Valor Unitario" style="font-weight:bold" />
+					 <p:inputText value="#{vendaBean.produto.precoVenda}" rendered="#{vendaBean.produto !=null}" size="8" style="height:50px; font-size:40px; color:red;"/>
+                     
+                     <h:outputLabel value="Valor Total" style="font-weight:bold" />
+					 <p:inputText value="#{vendaBean.valorTotal}" size="8" style="height:50px; font-size:40px; color:red;"/>
+					  <h:outputLabel value="Operador" style="font-weight:bold" />
+					  <p:selectOneMenu id="classe1" value="#{vendaBean.idFuncionario}" style="width: 258px;"   rendered="#{request.isUserInRole('ROLE_GEREN') }">
+                      <f:selectItem itemLabel="Selecione Funcionario" itemValue="" />
+                                  <f:selectItems value="#{funcionarioBean.listClienteAll()}" var="classes1" itemLabel="#{classes1.cliente.nome}" itemValue="#{classes1.idFuncionario}" />
+                      </p:selectOneMenu>
+                      <ui:repeat var="c" value="#{usuarioBean.listUsuariologado()}"> 
+                          <p:inputText value="#{c.funcionario.cliente.nome}" size="12" style="height:50px; font-size:20px; color:red;" readonly="true" rendered="#{request.isUserInRole('ROLE_USER') }"/>
+					  </ui:repeat>	  
+			</h:panelGrid>
+          </h:panelGrid>
+          
+		   
+		 
+		 </h:panelGrid>
+		
+	   </h:panelGrid>
+	       <h:panelGrid columns="6" cellpadding="1">
+		      <p:commandButton value="Finalizar Venda"  icon="ui-icon-check" style="margin-right:10px"   action="#{vendaBean.prepararFinalicaoVendas()}" />
+		      <p:commandButton value="Cancelar Venda"  icon="ui-icon-check" style="margin-right:10px"   action="#{controllerUtil.home}"/>
+		   </h:panelGrid> 
+
+	   </h:form>
+	</p:panel>
+
+</h:body>
+
+</html>

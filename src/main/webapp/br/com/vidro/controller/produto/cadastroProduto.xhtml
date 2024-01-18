@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<p:panel header="Cadastro Produto">
+		<h:form id="form" enctype="multipart/form-data">
+		
+		<p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"  showSummary="false"  />
+		
+		
+          <h:panelGrid columns="2" cellpadding="4">
+				<h:panelGrid columns="1" cellpadding="4">
+
+					<h:graphicImage id="img" value="/temp/#{produtoBean.nomeImg2}"
+						width="290" height="310" />
+ 
+					<h:inputFile id="file" label="file" style="width:250px; font-size: 10px;" value="#{produtoBean.part2}">
+					</h:inputFile>
+					<h:message style="color: red" for="file" />
+				
+					
+					<p:commandButton value="Upload Arquivo" ajax="false"
+						icon="ui-icon-check" action="#{produtoBean.uploadFile2()}"
+						process="@this" style="width:130px; font-size: 10px;" />
+						
+				</h:panelGrid>
+				<h:panelGrid  columns="1" cellpadding="1"> 
+				    <h:panelGrid  columns="3" cellpadding="1"> 
+					   <h:outputLabel value="Codigo de Barra: " style="font-weight:bold"  />
+					   <h:outputLabel value="Referencia do Produto: " style="font-weight:bold"  />	
+					   <h:outputLabel value="Data de Validade: " style="font-weight:bold"  />		 		              
+					   
+					    <p:inputText  value="#{produtoBean.produto.codigoBarra}"  size="30" />
+					    <p:inputText  value="#{produtoBean.produto.nomeProduto}"  size="30" />
+					     <p:calendar id="button" value="#{produtoBean.dtValidade}" showOn="button" pattern="dd/MM/yyyy"  timeZone="America/Sao_Paulo" size="12" />
+					</h:panelGrid>		
+				   <h:panelGrid  columns="2" cellpadding="1"> 
+					   <h:outputLabel value="Descrição de Produto: " style="font-weight:bold"  />
+					   <h:outputLabel value="Fornecedor: " style="font-weight:bold"  />
+				       <p:inputText  value="#{produtoBean.produto.descricaoProduto}"  size="48" />
+		               <h:selectOneMenu id="classe" value="#{produtoBean.produtoF}" style="width: 258px;" >
+                       <f:selectItem itemLabel="Selecione Fornecedores" itemValue="" />
+                           <f:selectItems value="#{produtoBean.fornecedorBean.listFornecedorAll()}" var="classes" itemLabel="#{classes.nomeFantasia}" itemValue="#{classes.nomeFantasia}" />
+                       </h:selectOneMenu> 
+					</h:panelGrid>
+					<h:panelGrid  columns="3" cellpadding="1"> 
+				
+					  <h:outputLabel value="Preço Compra " style="font-weight:bold"  />
+					  <h:outputLabel value="Quantidade: " style="font-weight:bold"  />
+                      <h:outputLabel value="Preço de Venda: " style="font-weight:bold"  />
+
+					  <p:inputText value="#{produtoBean.produto.precoCusto}" size="23"/>
+					  <p:inputText value="#{produtoBean.produto.estoqueAtual}"  size="23"/>
+					  <p:inputText value="#{produtoBean.produto.precoVenda}"  size="20"/>
+
+					 </h:panelGrid>
+					  <h:panelGrid  columns="4" cellpadding="1"> 
+				      		<h:outputLabel value="Categoria:" style="font-weight:bold" />
+				      		 <h:outputLabel value="" style="font-weight:bold" />
+		                    <h:outputLabel value="Grupo:" style="font-weight:bold" />
+		                    <h:outputLabel value="" style="font-weight:bold" />
+		                    
+		                   <h:selectOneMenu id="classe2" value="#{produtoBean.produtoF}" style="width: 258px;" >
+                           <f:selectItem itemLabel="Selecione Categoria" itemValue="" />
+                                  <f:selectItems value="#{produtoBean.fornecedorBean.listFornecedorAll()}" var="classes2" itemLabel="#{classes2.nomeFantasia}" itemValue="#{classes2.nomeFantasia}" />
+                           </h:selectOneMenu>
+                           <p:commandButton value="" 
+						     icon="ui-icon-disk" onclick="PF('dlg2').show();" immediate="true" process="@this" update=":form:grid"
+						       style="width:40px; height:25px;" />
+						         
+
+                    	   <h:selectOneMenu id="classe1" value="#{produtoBean.produtoF}" style="width: 258px;" >
+                           <f:selectItem itemLabel="Selecione Grupo" itemValue="" />
+                                  <f:selectItems value="#{produtoBean.fornecedorBean.listFornecedorAll()}" var="classes1" itemLabel="#{classes1.nomeFantasia}" itemValue="#{classes1.nomeFantasia}" />
+                           </h:selectOneMenu>     
+                           
+                            <p:commandButton value="" 
+						     icon="ui-icon-disk" onclick="PF('dlg3').show();" immediate="true" process="@this" update=":form:gridG"
+						       style="width:40px; height:25px;" />
+					</h:panelGrid>
+					
+                 </h:panelGrid>
+              	 <h:panelGrid columns="1" cellpadding="4">
+
+					<h:graphicImage id="img1" value="/temp/#{produtoBean.nomeImg}"
+						width="290" height="310" />
+
+					<h:inputFile id="file1" label="file1" style="width:250px; font-size: 10px;" value="#{produtoBean.part}">
+					</h:inputFile>
+					<h:message style="color: red" for="file1" />
+				
+					
+					<p:commandButton value="Upload Arquivo" ajax="false"
+						icon="ui-icon-check" action="#{produtoBean.uploadFile()}"
+						process="@this" style="width:130px; font-size: 10px;" />
+						
+				</h:panelGrid>
+				<h:panelGrid  columns="2" cellpadding="1"> 
+				     <h:panelGrid  columns="1" cellpadding="1"> 
+				         <h:outputLabel value="Observações " style="font-weight:bold"  />
+					     <p:inputTextarea rows="10" cols="40" value="#{produtoBean.cliente.observacao}"  style="font-weight:bold" />
+                     </h:panelGrid>
+                    <h:panelGrid  columns="1" cellpadding="1"> 	
+					  <h:outputLabel value="Valor CUSTO:" style="font-weight:bold"  />
+					  <p:inputText value="#{produtoBean.produto.valorCusto}" size="23"/>
+					  <h:outputLabel value="Margem Avista(%): " style="font-weight:bold"  />
+					  <p:inputText value="#{produtoBean.produto.margemAvista}"  size="23"/>
+                      <h:outputLabel value="Valor AVISTA: " style="font-weight:bold"  />	
+					  <p:inputText value="#{produtoBean.produto.valorAvista}"  size="23"/>
+					  <h:outputLabel value="Margem Prazo(%): " style="font-weight:bold"  />	
+					  <p:inputText value="#{produtoBean.produto.margemPrazo}"  size="23"/>
+					  <h:outputLabel value="Valor PRAZO: " style="font-weight:bold"  />	
+					  <p:inputText value="#{produtoBean.produto.valorPrazo}"  size="23"/>
+					  <h:outputLabel value="Margem Atacado(%): " style="font-weight:bold"  />	
+					  <p:inputText value="#{produtoBean.produto.margemAtacado}"  size="23"/>
+					  <h:outputLabel value="Valor ATACADO: " style="font-weight:bold"  />	
+					  <p:inputText value="#{produtoBean.produto.valorAtacado}"  size="23"/>
+                    </h:panelGrid>
+                 </h:panelGrid>
+				</h:panelGrid>
+
+			
+				
+			<p:commandButton value="Cadastrar" ajax="false" icon="ui-icon-check"
+					action="#{produtoBean.save()}" update="growl" />
+					
+		   <p:commandButton value="Voltar" ajax="true" icon="ui-icon-check"
+					style="margin-right:10px" action="#{controllerRoute.consultaProduto()}"
+					 update=":form" immediate="true" process="@this"/>			
+					 
+					 
+			<ui:include src="cadastroCategoria.xhtml"/>
+			<ui:include src="cadastroGrupo.xhtml"/>
+			
+		</h:form>  
+		
+
+	</p:panel>
+</h:body>
+
+</html>

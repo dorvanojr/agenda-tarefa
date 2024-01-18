@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+ <p:dialog  header="alterar Cliente" widgetVar="dlg3" modal="true"
+			height="800" width="1000" top="20">
+			
+
+				<p:growl id="growl2" showDetail="true" sticky="true" />
+
+				<h:panelGrid id="grid2" columns="2" cellpadding="1"  >
+                    
+					<h:outputLabel value="Nome Completo / Razão Social " style="font-weight:bold" />
+					<h:outputLabel value="SELECT:" style="font-weight:bold" />
+					
+					<p:inputText value="#{clienteBean.cliente1.nome}" size="50"/>
+					<p:inputText size="10" />
+
+
+					<h:outputLabel value="Nome Fantasia" style="font-weight:bold" />
+					<h:outputLabel value="CNPJ/CPF" style="font-weight:bold" />
+					
+					<p:inputText value="#{clienteBean.cliente1.nomeFantasia}" size="50"/>
+					<p:inputText value="#{clienteBean.cliente1.documentos[0].cpfcnpj}" rendered="#{clienteBean.cliente1.documentos[0]!=null}" />
+					<p:inputText value="#{clienteBean.documentos.cpfcnpj}" rendered="#{clienteBean.cliente1.documentos[0]==null}" />
+
+					<h:outputLabel value="Endereço" style="font-weight:bold"  />
+					<h:outputLabel value="CF/DF" style="font-weight:bold" />
+				
+					<p:inputText value="#{clienteBean.cliente1.endereco[0].endereco}" rendered="#{clienteBean.cliente1.endereco[0]!=null}" size="50" />
+					<p:inputText value="#{clienteBean.endereco.endereco}" rendered="#{clienteBean.cliente1.endereco[0]==null}" size="50" />
+					 
+					<p:inputText value="#{clienteBean.cliente1.cfdf}" />
+					
+					<h:panelGrid  columns="4" cellpadding="1" rendered="#{clienteBean.cliente1.endereco[0]!=null}"> 
+				
+					   <h:outputLabel value="Bairro " style="font-weight:bold"  />
+					   <h:outputLabel value="Cidade" style="font-weight:bold" />
+					   <h:outputLabel value="UF " style="font-weight:bold"  />
+					   <h:outputLabel value="CEP" style="font-weight:bold" />
+					
+					  <p:inputText value="#{clienteBean.cliente1.endereco[0].bairro}" size="15"/>
+					  <p:inputText value="#{clienteBean.cliente1.endereco[0].cidade}" size="15"/>
+					  <p:inputText value="#{clienteBean.cliente1.endereco[0].uf}" size="3" />
+					  <p:inputText value="#{clienteBean.cliente1.endereco[0].cep}" size="10"/>
+				   
+					</h:panelGrid>
+					
+					<h:panelGrid  columns="4" cellpadding="1" rendered="#{clienteBean.cliente1.endereco[0]==null}"> 
+				
+					   <h:outputLabel value="Bairro " style="font-weight:bold"  />
+					   <h:outputLabel value="Cidade" style="font-weight:bold" />
+					   <h:outputLabel value="UF " style="font-weight:bold"  />
+					   <h:outputLabel value="CEP" style="font-weight:bold" />
+					
+					  <p:inputText value="#{clienteBean.endereco.bairro}" size="15"/>
+					  <p:inputText value="#{clienteBean.endereco.cidade}" size="15"/>
+					  <p:inputText value="#{clienteBean.endereco.uf}" size="3" />
+					  <p:inputText value="#{clienteBean.endereco.cep}" size="10"/>
+				          
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" cellpadding="1"> 
+					   
+					    <h:outputLabel value="Telefone " style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.cliente1.telefone[0].telefone}" rendered="#{clienteBean.cliente1.telefone[0]!=null}"/>  
+					    <p:inputText value="#{clienteBean.telefone.telefone}" rendered="#{clienteBean.cliente1.telefone[0]==null}"/>  
+					
+					 </h:panelGrid>
+
+					<h:panelGrid  columns="1" cellpadding="1"> 
+					    <h:outputLabel value="Observações " style="font-weight:bold"  />
+					    <p:inputTextarea rows="10" cols="50" value="#{clienteBean.cliente1.observacao}"  style="font-weight:bold" />
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" cellpadding="1" rendered="#{clienteBean.cliente1.telefone[0]!=null}">  
+					   
+					    <h:outputLabel value="Residencial" style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.cliente1.telefone[0].residencial}" />
+					     
+					    <h:outputLabel value="Celular " style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.cliente1.telefone[0].celular}" />    
+					    
+					    <h:outputLabel value="Whatapps" style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.cliente1.telefone[0].whatapps}" />    
+					    
+					    <h:outputLabel value=" Fax " style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.cliente1.telefone[0].fax}" />  
+					
+					 </h:panelGrid>
+					 
+					 <h:panelGrid columns="1" cellpadding="1" rendered="#{clienteBean.cliente1.telefone[0]==null}">  
+					   
+					    <h:outputLabel value="Residencial" style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.telefone.residencial}" />
+					     
+					    <h:outputLabel value="Celular " style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.telefone.celular}" />    
+					    
+					    <h:outputLabel value="Whatapps" style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.telefone.whatapps}" />    
+					    
+					    <h:outputLabel value=" Fax " style="font-weight:bold"  />
+					    <p:inputText value="#{clienteBean.telefone.fax}" />  
+					
+					 </h:panelGrid>
+					 
+					 <h:outputLabel value="#{clienteBean.cliente1.idCliente}" style="font-weight:bold" />
+						
+				</h:panelGrid>
+
+				<p:commandButton value="Alterar" ajax="false" icon="ui-icon-check"
+					style="margin-right:10px" action="#{clienteBean.update()}"
+					update="growl" />
+				<p:commandButton value="Cancelar" update="grid" icon="ui-icon-check"
+					style="margin-right:10px" oncomplete="PF('dlg3').hide()"/>
+	
+                
+		   </p:dialog>
+
+</html>
+

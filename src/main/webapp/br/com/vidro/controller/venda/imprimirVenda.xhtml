@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:dialog header="Impressão" widgetVar="dlg3" modal="true"
+		height="180" width="190" top="0">
+          <h:panelGrid id="gridV" columns="1" cellpadding="1">
+			<p:commandLink  ajax="false" action="#{vendaBean.fecharVendas()}" >
+			   <p:graphicImage url="img/printer.png" />
+			</p:commandLink>
+			<p:commandButton value="Cancelar"  icon="ui-icon-check"
+				style="margin-right:10px" oncomplete="PF('dlg3').hide()" />
+		  </h:panelGrid>		
+	</p:dialog>
+
+</html>
+

@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
+<p:dataTable id="tbl" var="fi" value="#{fornecedorBean.listFornecedorAll()}"
+				editable="true" style="margin-bottom:20px" resizable="false"
+				closeOnEscape="true" paginator="true" rows="15">
+
+				<f:facet name="header">
+                 Listar Fornecedor
+                  </f:facet>
+				<p:ajax event="rowEdit" listener="#{clienteBean.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel" listener="#{clienteBean.onRowCancel}"
+					update=":form:msgs" />
+
+
+				<p:column headerText="Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.idFornecedor}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.idFornecedor}" style="width:100%"
+								disabled="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nome Fantasia">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.nomeFantasia}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.nomeFantasia}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nome Completo">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.cliente[0].nome}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.cliente[0].nome}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Cnpj">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.documentos[0].cnpj}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.documentos[0].cnpj}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.telefone[0].telefone}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.telefone[0].telefone}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+
+				<p:column headerText="Endereço">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{fi.endereco[0].endereco}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{fi.endereco[0].endereco}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+			</p:dataTable>
+			   <h:commandLink>
+                    <p:graphicImage url="img/excel.png" />
+                    <p:dataExporter type="xls" target="tbl" fileName="Fornecedor" options="#{controllerUtil.postProcessXLS()}" />
+           </h:commandLink>
+            <h:commandLink id="pdf">
+               <p:graphicImage url="img/pdf.png" size="24" />
+               <p:dataExporter type="pdf" target="tbl" fileName="Fornecedor" preProcessor="#{controllerUtil.preProcessPDF}" />
+           </h:commandLink>
+             <h:commandLink>
+                <p:graphicImage url="img/csv.jpg" />
+                <p:dataExporter type="csv" target="tbl" fileName="Fornecedor" pageOnly="true" />
+            </h:commandLink>
+            <h:commandLink>
+                <p:graphicImage url="img/xml.png" />
+                <p:dataExporter type="xml" target="tbl" fileName="Fornecedor" pageOnly="true" />
+           </h:commandLink>
+</html>
+

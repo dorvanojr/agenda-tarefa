@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+ 
+
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+		<p:panel id="panel" header="Duvida/Sugestões" style="height:600px;">
+          <h:panelGrid columns="2" >
+              <h:form> 	
+			    <h:outputText value="Email:" />
+                <h:inputText  value="#{emailBean.email.email}" />
+                <h:outputText value="Assunto:"  />
+                <h:inputText  value="#{emailBean.email.assunto}" size="30"/>
+                 <h:outputText value="Mensagem:" />
+                <h:inputTextarea value="#{emailBean.email.caixatexto}" cols="70" rows="10" />
+                 <p:commandButton value="Voltar"  action="#{controllerUtil.home()}" />
+                 <p:commandButton value="Email"  action="#{emailBean.sendMail2()}" />
+			</h:form>
+		 </h:panelGrid>
+		</p:panel>
+</h:body>
+</html>

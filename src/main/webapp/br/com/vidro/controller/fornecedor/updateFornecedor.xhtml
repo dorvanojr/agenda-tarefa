@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<p:dialog header="Alterar de Fornecedor" widgetVar="dlg3" modal="true"
+		height="560" width="770" top="0">
+
+			<p:growl id="growl1" showDetail="true" sticky="true" />
+
+			<h:panelGrid id="grid1" columns="1" cellpadding="2">
+
+				<h:outputLabel value="Nome Completo:" style="font-weight:bold" />
+				<p:inputText value="#{fornecedorBean.fornecedorAlterar.cliente[0].nome}" size="69"  rendered="#{fornecedorBean.fornecedorAlterar.cliente[0] != null}"/>
+				<p:inputText value="#{fornecedorBean.cliente.nome}" size="69"  rendered="#{fornecedorBean.fornecedorAlterar.cliente[0] == null}"/>
+
+				<h:panelGrid  columns="2" cellpadding="1"> 
+					   <h:outputLabel value="Endereco " style="font-weight:bold"  />
+					   <h:outputLabel value="Nome Fantasia " style="font-weight:bold" />
+					   
+					   <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].endereco}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] != null}"/>
+					    <p:inputText value="#{fornecedorBean.endereco.endereco}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] == null}"/>
+					   <p:inputText value="#{fornecedorBean.fornecedorAlterar.nomeFantasia}" size="30" />
+				</h:panelGrid>
+				<h:panelGrid  columns="3" cellpadding="1" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] != null}"> 
+			         	<h:outputLabel value="Bairro" style="font-weight:bold" />
+				        <h:outputLabel value="Cidade" style="font-weight:bold" />
+				        <h:outputLabel value="Complemento" style="font-weight:bold" />
+				        
+				        <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].bairro}" size="22" />
+				        <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].cidade}" size="20"/>
+				        <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].complemento}" size="19"/>
+				</h:panelGrid>
+				<h:panelGrid  columns="3" cellpadding="1" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] == null}"> 
+			         	<h:outputLabel value="Bairro" style="font-weight:bold" />
+				        <h:outputLabel value="Cidade" style="font-weight:bold" />
+				        <h:outputLabel value="Complemento" style="font-weight:bold" />
+				        
+				        <p:inputText value="#{fornecedorBean.endereco.bairro}" size="22" />
+				        <p:inputText value="#{fornecedorBean.endereco.cidade}" size="20"/>
+				        <p:inputText value="#{fornecedorBean.endereco.complemento}" size="19"/>
+				</h:panelGrid>
+				
+				 <h:panelGrid columns="6" cellpadding="1" >  
+					    <h:outputLabel value=" Telefone" style="font-weight:bold"  />
+					    <h:outputLabel value=" Celular " style="font-weight:bold"  />
+					    <h:outputLabel value=" whatapps" style="font-weight:bold"  />
+					    <h:outputLabel value="N° Fax " style="font-weight:bold"  />
+					    <h:outputLabel value="CEP " style="font-weight:bold"  />
+					    <h:outputLabel value="UF" style="font-weight:bold"  />
+					    
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.telefone[0].telefone}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] != null}"  />
+					    <p:inputText value="#{fornecedorBean.telefone.telefone}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] == null}"  />
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.telefone[0].celular}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] != null}"/> 
+					    <p:inputText value="#{fornecedorBean.telefone.celular}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] == null}"/>    
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.telefone[0].whatapps}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] != null}"/>    
+					    <p:inputText value="#{fornecedorBean.telefone.whatapps}" size="10" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] == null}"/>
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.telefone[0].fax}" size="9" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] != null}"/>  
+					    <p:inputText value="#{fornecedorBean.telefone.fax}" size="9" rendered="#{fornecedorBean.fornecedorAlterar.telefone[0] == null}"/> 
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].cep}" size="9" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] != null}"/>    
+					    <p:inputText value="#{fornecedorBean.endereco.cep}" size="9" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] == null}"/> 
+					    <p:inputText value="#{fornecedorBean.fornecedorAlterar.endereco[0].uf}" size="1" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] != null}"/>
+					    <p:inputText value="#{fornecedorBean.endereco.uf}" size="1" rendered="#{fornecedorBean.fornecedorAlterar.endereco[0] == null}"/>
+					    
+					 </h:panelGrid>
+					 <h:panelGrid  columns="2" cellpadding="1"> 
+					      <h:outputLabel value="E-mail " style="font-weight:bold"  />
+					      <h:outputLabel value="Nome Representante " style="font-weight:bold" />
+					   
+					      <p:inputText value="#{fornecedorBean.fornecedorAlterar.email[0].email}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.email[0] != null}"/>
+					      <p:inputText value="#{fornecedorBean.email.email}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.email[0] == null}"/>
+					      <p:inputText value="#{fornecedorBean.fornecedorAlterar.representante}" size="30" />
+				     </h:panelGrid>
+				     
+				     <h:panelGrid  columns="2" cellpadding="1"> 
+					      <h:outputLabel value="Home Page " style="font-weight:bold"  />
+					      <h:outputLabel value="G-TALK " style="font-weight:bold" />
+					   
+					      <p:inputText value="#{fornecedorBean.fornecedorAlterar.email[0].homepage}" size="30" rendered="#{fornecedorBean.fornecedorAlterar.email[0] != null}"/>
+					      <p:inputText value="#{fornecedorBean.email.homepage}" size="30" rendered="#{fornecedorBean.fornecedorAlterar.email[0] == null}"/>
+					      <p:inputText value="#{fornecedorBean.fornecedorAlterar.email[0].gtalk}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.email[0] != null}"/>
+					      <p:inputText value="#{fornecedorBean.email.gtalk}" size="35" rendered="#{fornecedorBean.fornecedorAlterar.email[0] == null}"/>
+				     </h:panelGrid>
+                     <h:panelGrid columns="6" cellpadding="1" rendered="#{fornecedorBean.fornecedorAlterar.documentos[0] != null}"> 
+					       <h:outputLabel value=" N° CNPJ" style="font-weight:bold"  />
+					       <h:outputLabel value=" N° LE " style="font-weight:bold"  />
+					       <h:outputLabel value=" N° IM" style="font-weight:bold"  />
+					       <h:outputLabel value="N° do CPF " style="font-weight:bold"  />
+					       <h:outputLabel value="N° RG " style="font-weight:bold"  />
+					       <h:outputLabel value="EMISSOR" style="font-weight:bold"  />
+					    
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].cnpj}" size="9"/>
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].nle}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].nim}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].cpf}" size="9"/>  
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].rg}" size="8"/>    
+					       <p:inputText value="#{fornecedorBean.fornecedorAlterar.documentos[0].emissor}" size="5"/>
+					</h:panelGrid>
+			        <h:panelGrid columns="6" cellpadding="1" rendered="#{fornecedorBean.fornecedorAlterar.documentos[0] == null}"> 
+					       <h:outputLabel value=" N° CNPJ" style="font-weight:bold"  />
+					       <h:outputLabel value=" N° LE " style="font-weight:bold"  />
+					       <h:outputLabel value=" N° IM" style="font-weight:bold"  />
+					       <h:outputLabel value="N° do CPF " style="font-weight:bold"  />
+					       <h:outputLabel value="N° RG " style="font-weight:bold"  />
+					       <h:outputLabel value="EMISSOR" style="font-weight:bold"  />
+					    
+					       <p:inputText value="#{fornecedorBean.documentos.cnpj}" size="9"/>
+					       <p:inputText value="#{fornecedorBean.documentos.nle}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.nim}" size="9"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.cpf}" size="9"/>  
+					       <p:inputText value="#{fornecedorBean.documentos.rg}" size="8"/>    
+					       <p:inputText value="#{fornecedorBean.documentos.emissor}" size="5"/>
+					
+					 </h:panelGrid>
+			
+			 </h:panelGrid>
+					 
+		
+        
+				
+			<p:commandButton value="Alterar" ajax="false" icon="ui-icon-check"
+				style="margin-right:10px"  action="#{fornecedorBean.update()}"
+				update="growl1" />
+			<p:commandButton value="Cancelar" update="grid1" icon="ui-icon-check"
+				style="margin-right:10px" oncomplete="PF('dlg3').hide()"/>
+	</p:dialog>
+
+</html>
+

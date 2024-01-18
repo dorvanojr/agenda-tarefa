@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+ 
+
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+	<p:panel id="panel" header="Consultar Usuario" style="height:600px;">
+			<h:form id="form">
+				<h:panelGrid id="grid5" columns="3" cellpadding="4">
+					<p:inputText value="#{usuarioBean.cliente.nome}" />
+					<p:commandButton value="Pesquisar" update=":form:tabela"
+						action="#{usuarioBean.listUsuario()}" icon="ui-icon-check"
+						ajax="false" />
+				</h:panelGrid>
+
+				<p:dataTable id="tabela" value="#{usuarioBean.clientes}" var="c">
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="id" />
+						</f:facet>
+						<h:outputText value="#{c.idCliente}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Nome" />
+						</f:facet>
+						<h:outputText value="#{c.nome}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="login" />
+						</f:facet>
+						<h:outputText value="#{c.user[0].username}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="email" />
+						</f:facet>
+						<h:outputText value="#{c.email[0].email}" />
+					</p:column>
+					<p:column resizable="true">
+					<f:facet name="header">
+							<h:outputText value="Imagem" />
+					</f:facet>
+						
+			           <p:graphicImage value="/temp/#{c.idCliente}.jpg" cache="false" width="120"
+						height="110" />
+					
+
+					</p:column>
+					<p:column style="text-align: center">
+					   <f:facet name="header">
+						   <h:outputText value="Excluir" />
+					   </f:facet>
+					   <p:commandButton value="Excluir"
+						   onclick="PF('confirmation').show()" type= "button" />
+				     </p:column>
+				     <p:column headerText="Alterar">
+					<h:form>
+                         <p:commandButton action="#{usuarioBean.prepararAlterarCliente()}" value="Alterar"/>
+                    </h:form>
+				</p:column>
+					
+				</p:dataTable>
+				
+				<p:commandButton value="Cadastrar" ajax="false" icon="ui-icon-check"
+					style="margin-right:10px"
+					action="#{controllerRoute.consultarUsuario}" />
+				
+
+               <p:commandButton value="Voltar"  action="#{controllerUtil.home()}" ajax="false"/>                  
+
+
+									
+			<p:confirmDialog
+				message="Tem Certeza que deseja excluir este registro?"
+				showEffect="bounce" hideEffect="explode" resizable="false"
+				modal="true" header="Excluir" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update=":form:tabela"
+					oncomplete="PF('confirmation').hide()"
+					action="#{usuarioBean.excluir()}" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					type="button" />
+			</p:confirmDialog>
+			  		
+			
+			
+					
+			</h:form>
+			</p:panel>
+	</h:body>
+</html>
+

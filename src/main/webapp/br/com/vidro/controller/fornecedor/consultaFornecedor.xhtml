@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<p:panel id="panel" header="Consultar Fornecedor" style="height:600px;">
+		<h:form id="form">
+			<h:panelGrid id="grid5" columns="3" cellpadding="4">
+				<p:inputText value="#{fornecedorBean.parametro}" />
+				<p:commandButton value="Pesquisar" update=":form:tabela"
+					action="#{fornecedorBean.listFornecedor()}" icon="ui-icon-check"
+					ajax="false" />
+			</h:panelGrid>
+
+			<p:dataTable id="tabela" value="#{fornecedorBean.fornecedores}"
+				var="f">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="id" />
+					</f:facet>
+					<h:outputText value="#{f.idFornecedor}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome" />
+					</f:facet>
+					<h:outputText value="#{f.cliente[0].nome}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome Fantasia" />
+					</f:facet>
+					<h:outputText value="#{f.nomeFantasia}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="CNPJ/CPF" />
+					</f:facet>
+					<h:outputText value="#{f.documentos[0].cnpj}"  />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Telefone" />
+					</f:facet>
+					<h:outputText value="#{f.telefone[0].telefone}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Endereço" />
+					</f:facet>
+					<h:outputText value="#{f.endereco[0].endereco}" />
+				</p:column>
+			
+				<p:column style="text-align: center">
+					<f:facet name="header">
+						<h:outputText value="Excluir" />
+					</f:facet>
+					<p:commandButton value="Excluir"
+						onclick="PF('confirmation').show()" type="button" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<p:commandButton value="Alterar" image="ui-icon-tag"
+						update=":form:grid1 " oncomplete="PF('dlg3').show()">
+						<f:setPropertyActionListener value="#{f}"
+							target="#{fornecedorBean.fornecedorAlterar}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<h:panelGrid id="grid4" columns="3" cellpadding="4">
+				<p:commandButton value="Cadastrar" icon="ui-icon-disk"
+					onclick="PF('dlg2').show();" immediate="true" process="@this" update=":form:grid"  action="#{fornecedorBean.cleanForm()}" />
+				<p:commandButton action="#{controllerUtil.home}"
+					value="Voltar" icon="ui-icon-arrowthick-1-w" />
+			</h:panelGrid>
+
+			<p:growl id="msgs" showDetail="true" />
+
+
+             <ui:include src="updateFornecedor.xhtml"/> 
+             <ui:include src="cadastroFornecedor.xhtml"/>
+             
+			<p:confirmDialog
+				message="Tem Certeza que deseja excluir este registro?"
+				showEffect="bounce" hideEffect="explode" resizable="false"
+				modal="true" header="Excluir" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update=":form:tabela"
+					oncomplete="PF('confirmation').hide()"
+					action="#{fornecedorBean.excluir()}" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					type="button" />
+			</p:confirmDialog>
+			
+			  <ui:include src="consultaFornecedorAll.xhtml"/>
+			  
+		</h:form>
+
+	</p:panel>
+
+</h:body>
+
+</html>

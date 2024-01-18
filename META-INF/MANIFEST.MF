@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: agenda-tarefa
+Bundle-SymbolicName: agenda-tarefa
+Bundle-Version: 1.0.0.qualifier
+Export-Package: br.com.vidro.controller.produto,
+ br.com.vidro.dao,
+ br.com.vidro.entity,
+ br.com.vidro.listener,
+ br.com.vidro.produces,
+ br.com.vidro.util

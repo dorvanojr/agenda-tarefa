@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+	<p:dialog  header="Filtro de Vendas" widgetVar="dlg2" modal="true"
+			height="200" width="500" top="40">
+
+				<p:growl id="growl" showDetail="true" sticky="true" autoUpdate="true"  showSummary="false"  />
+
+				<h:panelGrid id="grid" columns="1" cellpadding="3"  >
+                  
+					<h:outputLabel value="Data Inicial " style="font-weight:bold" />
+			        <p:calendar id="button" value="#{relatorioBean.dtinicial}" showOn="button" pattern="dd/MM/yyyy"  timeZone="America/Sao_Paulo" required="true" requiredMessage="data esta vazio"/>
+					<h:outputLabel value="Data Final:" style="font-weight:bold" />
+					<p:calendar id="button1" value="#{relatorioBean.dtfinal}" showOn="button" pattern="dd/MM/yyyy"  timeZone="America/Sao_Paulo" required="true" requiredMessage="data esta vazio"/>
+				</h:panelGrid>
+                <br/>
+				<p:commandButton value="Gerar Relatório" ajax="false" icon="ui-icon-check"
+					style="margin-right:10px" action="#{relatorioBean.gerar()}"
+					update="growl" />
+				<p:commandButton value="Cancelar" update="grid" icon="ui-icon-check"
+					style="margin-right:10px" oncomplete="PF('dlg2').hide()"/>
+	
+                
+		   </p:dialog>
+
+</html>
+

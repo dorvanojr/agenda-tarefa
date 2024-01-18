@@ -1,0 +1,16 @@
+select prd.codigoBarra,
+       prd.nomeProduto,
+       prd.precoCusto,
+       prd.precoVenda,
+       nda.quantidade,
+       prd.estoqueAtual
+                 from
+                 estoque.produto prd
+                 inner join
+                 estoque.vendas nda on nda.idProduto = prd.idProduto
+                 inner join
+                 estoque.totalVendas tot on tot.idTotalVendas = nda.idTotalVendas
+                 inner join
+                 estoque.empresa ep on ep.idEmpresa = nda.idEmpresa 
+                  where
+                  ep.idEmpresa = $P{id}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:b="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+							http://www.springframework.org/schema/beans/spring-beans.xsd
+							http://www.springframework.org/schema/security
+                            http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+
+    <http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/imagem.xhtml" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER' , 'ROLE_GEREN')"/>
+        <intercept-url pattern="/home.xhtml" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER' , 'ROLE_GEREN')"/>
+        <intercept-url pattern="/br/com/vidro/controller/venda/controllerVenda.xhtml" access="hasAnyRole('ROLE_GEREN', 'ROLE_USER')"/>
+        <intercept-url pattern="/br/com/vidro/controller/cliente/consultaCliente.xhtml" access="hasAnyRole('ROLE_GEREN', 'ROLE_USER')"/>
+        <intercept-url pattern="/br/com/vidro/controller/produto/consultaProduto.xhtml" access="hasAnyRole('ROLE_GEREN', 'ROLE_USER')"/>
+        <intercept-url pattern="/br/com/vidro/controller/fornecedor/consultaFornecedor.xhtml" access="hasAnyRole('ROLE_GEREN', 'ROLE_USER')"/>
+        <intercept-url pattern="/br/com/vidro/controller/funcionario/consultaFuncionario.xhtml" access="hasRole('ROLE_GEREN')"/>
+        <intercept-url pattern="/br/com/vidro/controller/empresa/consultaEmpresa.xhtml" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/br/com/vidro/controller/usuario/usuario.xhtml" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/br/com/vidro/controller/email/email.xhtml" access="hasAnyRole('ROLE_GEREN', 'ROLE_USER')"/>
+        <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?erro=true"/>
+        
+    </http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="SELECT username, password, enable, idCliente FROM user WHERE username=?"
+				authorities-by-username-query="SELECT user_username AS username, auth_authority AS authority FROM userauth WHERE user_username=?" />
+		</authentication-provider>
+	</authentication-manager>
+
+	<b:bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<b:property name="url" value="jdbc:mysql://localhost:3306/estoque" />
+		<b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<b:property name="username" value="root" />
+		<b:property name="password" value="123456" />
+	</b:bean>
+</b:beans>

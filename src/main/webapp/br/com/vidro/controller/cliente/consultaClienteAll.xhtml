@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+ 	<p:dataTable id="tbl" var="cli" value="#{clienteBean.listClienteAll()}"
+				editable="true" style="margin-bottom:20px" resizable="false"
+				closeOnEscape="true" paginator="true" rows="15">
+				
+				<f:facet name="header">
+                 Listar Cliente
+                  </f:facet>
+				<p:ajax event="rowEdit" listener="#{clienteBean.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel" listener="#{clienteBean.onRowCancel}"
+					update=":form:msgs" />
+
+
+				<p:column headerText="Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.idCliente}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.idCliente}" style="width:100%"
+								disabled="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.nome}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.nome}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="CPF/CNPJ">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.documentos[0].cpfcnpj}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.documentos[0].cpfcnpj}" style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Telefone">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.telefone[0].residencial}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.telefone[0].residencial}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Endereço">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.endereco[0].endereco}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.endereco[0].endereco}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+			</p:dataTable>
+			<h:commandLink>
+               <p:graphicImage url="img/excel.png" />
+               <p:dataExporter type="xls" target="tbl" fileName="Clientes" options="#{controllerUtil.postProcessXLS()}" />
+           </h:commandLink>
+            <h:commandLink id="pdf">
+               <p:graphicImage url="img/pdf.png" size="24" />
+               <p:dataExporter type="pdf" target="tbl" fileName="Clientes" preProcessor="#{controllerUtil.preProcessPDF}" />
+           </h:commandLink>
+             <h:commandLink>
+                <p:graphicImage url="img/csv.jpg" />
+                <p:dataExporter type="csv" target="tbl" fileName="Clientes" pageOnly="true" />
+            </h:commandLink>
+            <h:commandLink>
+                <p:graphicImage url="img/xml.png" />
+                <p:dataExporter type="xml" target="tbl" fileName="Clientes" pageOnly="true" />
+           </h:commandLink>
+</html>
+

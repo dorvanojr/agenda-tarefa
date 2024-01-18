@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Controle Administrativo</title>
+	<style>
+body {
+	background-color: #eeeeee;
+	padding-bottom: 40px;
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<p:panel id="panel" header="Consultar Funcionario" style="height:600px;">
+		<h:form id="form">
+			<h:panelGrid id="grid5" columns="3" cellpadding="4">
+				<p:inputText value="#{funcionarioBean.parametros}" />
+					<p:commandButton value="Pesquisar" action="#{funcionarioBean.acao()}"
+					icon="ui-icon-check" ajax="false" />
+			</h:panelGrid>
+
+			<p:dataTable id="tabela" value="#{funcionarioBean.clientes}" var="c">
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Matricula" />
+					</f:facet>
+					<h:outputText value="#{c.idFuncionario}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Nome Funcionario" />
+					</f:facet>
+					<h:outputText value="#{c.cliente.nome}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="telefone" />
+					</f:facet>
+					<h:outputText value="#{c.telefone[0].telefone}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="CPF" />
+					</f:facet>
+					<h:outputText value="#{c.documentos[0].cpf}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="RG" />
+					</f:facet>
+					<h:outputText value="#{c.documentos[0].rg}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Carteira de trabalho" />
+					</f:facet>
+					<h:outputText value="#{c.documentos[0].carteiraTrabalho}" />
+				</p:column>
+				<p:column>
+					<f:facet name="header">
+						<h:outputText value="Empresa" />
+					</f:facet>
+					<h:outputText value="#{c.cliente.empresa.razaoSocial}" />
+				</p:column>
+				<p:column headerText="Alterar">
+					<h:form>
+                         <p:commandButton action="#{produtoBean.updateProduto()}" value="Alterar"/>
+                    </h:form>
+				</p:column>
+
+				<p:column style="text-align: center">
+					<f:facet name="header">
+						<h:outputText value="Excluir" />
+					</f:facet>
+					<p:commandButton value="Excluir"
+						onclick="PF('confirmation').show()" type="button" />
+				</p:column>
+			</p:dataTable>
+			
+			<p:growl id="msgs" showDetail="true" />
+
+			<h:panelGrid id="grid4" columns="3" cellpadding="4">
+				<p:commandButton value="Cadastrar" icon="ui-icon-disk"
+					action="#{controllerRoute.cadastroFuncionario()}" />
+				<p:commandButton action="#{controllerUtil.home}"
+					value="Voltar" icon="ui-icon-arrowthick-1-w" />
+			</h:panelGrid>
+
+	        <ui:include src="consultaFuncionarioAll.xhtml"/>
+          
+		
+
+			<p:confirmDialog
+				message="Tem Certeza que deseja excluir este registro?"
+				showEffect="bounce" hideEffect="explode" resizable="false"
+				modal="true" header="Excluir" severity="alert"
+				widgetVar="confirmation">
+				<p:commandButton value="Sim" update=":form:tabela"
+					oncomplete="PF('confirmation').hide()"
+					action="#{clienteBean.excluir()}" />
+				<p:commandButton value="Não" onclick="PF('confirmation').hide()"
+					type="button" />
+			</p:confirmDialog>
+	
+
+	
+		</h:form>
+	</p:panel>
+
+
+
+</h:body>
+
+</html>

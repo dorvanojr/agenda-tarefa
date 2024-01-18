@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+ 
+ 
+			<p:dataTable id="tbl" var="cli" value="#{produtoBean.listProdutoAll()}"
+				editable="true" style="margin-bottom:20px" resizable="false"
+				closeOnEscape="true" paginator="true" rows="5">
+				<f:facet name="header">
+                Listar Produtos
+                  </f:facet>
+				<p:ajax event="rowEdit" listener="#{produtoBean.onRowEdit}"
+					update=":form:msgs" />
+				<p:ajax event="rowEditCancel" listener="#{produtoBean.onRowCancel}"
+					update=":form:msgs" />
+
+
+				<p:column headerText="Id">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.idProduto}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{cli.idProduto}"
+								style="width:100%" disabled="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Codigo Barra">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.codigoBarra}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{cli.codigoBarra}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Nome">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.nomeProduto}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{cli.nomeProduto}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Preço de venda">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.precoVenda}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{cli.precoVenda}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				
+				<p:column headerText="Estoque Atual">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.estoqueAtual}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{cli.estoqueAtual}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Fornecedor">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{cli.nomeFornecedor}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText  value="#{cli.nomeFornecedor}"
+								style="width:100%" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+			    <p:column  headerText="Data Validade">
+			      <p:cellEditor>
+					<f:facet name="output">
+							<h:outputText value="#{cli.dtValidade}" > 
+					            <f:convertDateTime  pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />  
+					        </h:outputText>
+						</f:facet>
+					<f:facet name="input">
+					      <p:calendar id="button" value="#{cli.dtValidade}" showOn="button" pattern="dd/MM/yyyy"  timeZone="America/Sao_Paulo" size="12" />
+					</f:facet> 
+				  </p:cellEditor>	 
+				</p:column>
+			</p:dataTable>
+		    <h:commandLink>
+                    <p:graphicImage url="img/excel.png"/>
+                    <p:dataExporter type="xls" target="tbl" fileName="Produtos" options="#{controllerUtil.postProcessXLS()}" />
+           </h:commandLink>
+           <h:commandLink id="pdf">
+               <p:graphicImage url="img/pdf.png" size="24" />
+               <p:dataExporter type="pdf" target="tbl" fileName="Produtos" preProcessor="#{controllerUtil.preProcessPDF}" />
+           </h:commandLink>
+            <h:commandLink>
+                <p:graphicImage url="img/csv.jpg" />
+                <p:dataExporter type="csv" target="tbl" fileName="Produtos" pageOnly="true" />
+            </h:commandLink>
+            <h:commandLink>
+                <p:graphicImage url="img/xml.png" />
+                <p:dataExporter type="xml" target="tbl" fileName="Produtos" pageOnly="true" />
+           </h:commandLink>
+           
+</html>
