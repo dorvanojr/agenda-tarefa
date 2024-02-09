@@ -1,1 +1,1 @@
-crud de controle de estoque  com JSF, primefaces, spring MVC, spring security, hibernate
+crud de controle de estoque  com JSF, primefaces, CDI, spring security, hibernate
